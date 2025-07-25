@@ -11,11 +11,14 @@ public class AsyncRequestProcessor {
     }
 
     public CompletableFuture<UserData> processRequest(String userId) {
-        try {
-            Thread.sleep(100);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-        return CompletableFuture.supplyAsync(() -> new UserData(userId, "Details"), executor);
+
+        return CompletableFuture.supplyAsync(() -> {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            return new UserData(userId, "Details");
+        }, executor);
     }
 }
